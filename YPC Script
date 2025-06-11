@@ -97,5 +97,8 @@ function myFunction() {
       "",
       { htmlBody: htmlBody }
     );
+
+    // 🔴 Clear the Daily Pull YPC tab after email is sent
+    dailySheet.clearContents();
   }
 }
