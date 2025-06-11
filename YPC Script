@@ -1,104 +1,103 @@
-function myFunction() {
-  function updateYPCSeenAndNewBids() {
-    const ss = SpreadsheetApp.getActiveSpreadsheet();
-    const dailySheet = ss.getSheetByName("Daily Pull YPC");
-    const seenSheet = ss.getSheetByName("Seen YPC");
-    const newBidsSheet = ss.getSheetByName("New Bids YPC");
+function updateYPCSeenAndNewBids() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const dailySheet = ss.getSheetByName("Daily Pull YPC");
+  const seenSheet = ss.getSheetByName("Seen YPC");
+  const newBidsSheet = ss.getSheetByName("New Bids YPC");
 
-    dailySheet.activate();
-    SpreadsheetApp.flush();
+  dailySheet.activate();
+  SpreadsheetApp.flush();
 
-    const dailyData = dailySheet.getDataRange().getValues();
-    const seenData = seenSheet.getDataRange().getValues();
+  const dailyData = dailySheet.getDataRange().getValues();
+  const seenData = seenSheet.getDataRange().getValues();
 
-    if (dailyData.length < 2) return;
+  if (dailyData.length < 2) return;
 
-    const headers = dailyData[0];
-    const projectIdIndex = headers.indexOf("Project_ID");
-    const projectLinkIndex = headers.indexOf("Project_Link");
-    const projectNameIndex = headers.indexOf("Project");
-    const stateIndex = headers.indexOf("State");
+  const headers = dailyData[0];
+  const projectIdIndex = headers.indexOf("Project_ID");
+  const projectLinkIndex = headers.indexOf("Project_Link");
+  const projectNameIndex = headers.indexOf("Project");
+  const stateIndex = headers.indexOf("State");
 
-    if (projectIdIndex === -1 || projectLinkIndex === -1 || projectNameIndex === -1 || stateIndex === -1) {
-      throw new Error("Missing one or more required columns: Project_ID, Project_Link, Project, or State.");
-    }
-
-    const seenIDs = new Set(seenData.slice(1).map(row => String(row[projectIdIndex]).toUpperCase()));
-
-    const newRows = dailyData.slice(1).filter(row =>
-      !seenIDs.has(String(row[projectIdIndex]).toUpperCase())
-    );
-
-    const newHeaders = headers.slice();
-    newHeaders.splice(projectLinkIndex, 1);
-
-    const cleanedRows = newRows.map(row => {
-      const cleaned = row.slice();
-      cleaned[projectNameIndex] = {
-        formula: `=HYPERLINK("${row[projectLinkIndex]}", "${row[projectNameIndex]}")`
-      };
-      cleaned.splice(projectLinkIndex, 1);
-      return cleaned;
-    });
-
-    // Always write headers
-    seenSheet.getRange(1, 1, 1, newHeaders.length).setValues([newHeaders]);
-
-    if (cleanedRows.length > 0) {
-      seenSheet.getRange(seenSheet.getLastRow() + 1, 1, cleanedRows.length, cleanedRows[0].length).setValues(
-        cleanedRows.map(row => row.map(cell => typeof cell === 'object' && cell.formula ? cell.formula : cell))
-      );
-    }
-
-    // Filter WA-only rows
-    const waRows = newRows.filter(row => String(row[stateIndex]).toUpperCase() === "WA");
-
-    const cleanedWaRows = waRows.map(row => {
-      const cleaned = row.slice();
-      cleaned[projectNameIndex] = {
-        formula: `=HYPERLINK("${row[projectLinkIndex]}", "${row[projectNameIndex]}")`
-      };
-      cleaned.splice(projectLinkIndex, 1);
-      return cleaned;
-    });
-
-    // Clear and update New Bids YPC with only WA rows
-    newBidsSheet.clearContents();
-    newBidsSheet.getRange(1, 1, 1, newHeaders.length).setValues([newHeaders]);
-
-    if (cleanedWaRows.length > 0) {
-      newBidsSheet.getRange(2, 1, cleanedWaRows.length, cleanedWaRows[0].length).setValues(
-        cleanedWaRows.map(row => row.map(cell => typeof cell === 'object' && cell.formula ? cell.formula : cell))
-      );
-    }
-
-    // Construct WA-only email
-    const introLine = `<p>There are <strong>${waRows.length}</strong> new WA bids listed on Yakima Planning Center as of <strong>${new Date().toLocaleDateString()}</strong>.</p>`;
-
-    const emailBody = waRows.map(row => {
-      return newHeaders.map((header, idx) => {
-        if (header === "Project") {
-          return `<strong>Project:</strong> <a href="${row[projectLinkIndex]}">${row[projectNameIndex]}</a>`;
-        }
-        const originalIdx = idx >= projectLinkIndex ? idx + 1 : idx;
-        return `<strong>${header}:</strong> ${row[originalIdx]}`;
-      }).join('<br>');
-    }).map(block => `<p>${block}</p>`).join('<hr>');
-
-    const htmlBody = `
-      <h3>New WA Bids from Yakima Planning Center</h3>
-      ${introLine}
-      ${emailBody}
-    `;
-
-    GmailApp.sendEmail(
-      "Samuel.Kroll@cwu.edu, tylers@ttcexcavation.com",
-      "New WA Bids from Yakima Planning Center",
-      "",
-      { htmlBody: htmlBody }
-    );
-
-    // 🔴 Clear the Daily Pull YPC tab after email is sent
-    dailySheet.clearContents();
+  if (projectIdIndex === -1 || projectLinkIndex === -1 || projectNameIndex === -1 || stateIndex === -1) {
+    throw new Error("Missing one or more required columns: Project_ID, Project_Link, Project, or State.");
   }
+
+  const seenIDs = new Set(seenData.slice(1).map(row => String(row[projectIdIndex]).toUpperCase()));
+
+  const newRows = dailyData.slice(1).filter(row =>
+    !seenIDs.has(String(row[projectIdIndex]).toUpperCase())
+  );
+
+  const cleanedRows = newRows.map(row => {
+    const cleaned = row.slice();
+    cleaned[projectNameIndex] = {
+      formula: `=HYPERLINK("${row[projectLinkIndex]}", "${row[projectNameIndex]}")`
+    };
+    cleaned.splice(projectLinkIndex, 1);
+    return cleaned;
+  });
+
+  const newHeaders = headers.slice();
+  newHeaders.splice(projectLinkIndex, 1);
+
+  // Always write headers to Seen YPC
+  seenSheet.getRange(1, 1, 1, newHeaders.length).setValues([newHeaders]);
+
+  // Append cleaned new rows to Seen YPC
+  if (cleanedRows.length > 0) {
+    seenSheet.getRange(seenSheet.getLastRow() + 1, 1, cleanedRows.length, cleanedRows[0].length).setValues(
+      cleanedRows.map(row => row.map(cell => typeof cell === 'object' && cell.formula ? cell.formula : cell))
+    );
+  }
+
+  // Filter only WA rows
+  const waRows = newRows.filter(row => String(row[stateIndex]).toUpperCase() === "WA");
+
+  const cleanedWaRows = waRows.map(row => {
+    const cleaned = row.slice();
+    cleaned[projectNameIndex] = {
+      formula: `=HYPERLINK("${row[projectLinkIndex]}", "${row[projectNameIndex]}")`
+    };
+    cleaned.splice(projectLinkIndex, 1);
+    return cleaned;
+  });
+
+  // Update New Bids YPC sheet with WA rows only
+  newBidsSheet.clearContents();
+  newBidsSheet.getRange(1, 1, 1, newHeaders.length).setValues([newHeaders]);
+
+  if (cleanedWaRows.length > 0) {
+    newBidsSheet.getRange(2, 1, cleanedWaRows.length, cleanedWaRows[0].length).setValues(
+      cleanedWaRows.map(row => row.map(cell => typeof cell === 'object' && cell.formula ? cell.formula : cell))
+    );
+  }
+
+  // Build WA-only email body
+  const introLine = `<p>There are <strong>${waRows.length}</strong> new WA bids listed on Yakima Planning Center as of <strong>${new Date().toLocaleDateString()}</strong>.</p>`;
+
+  const emailBody = waRows.map(row => {
+    return newHeaders.map((header, idx) => {
+      if (header === "Project") {
+        return `<strong>Project:</strong> <a href="${row[projectLinkIndex]}">${row[projectNameIndex]}</a>`;
+      }
+      const originalIdx = idx >= projectLinkIndex ? idx + 1 : idx;
+      return `<strong>${header}:</strong> ${row[originalIdx]}`;
+    }).join('<br>');
+  }).map(block => `<p>${block}</p>`).join('<hr>');
+
+  const htmlBody = `
+    <h3>New WA Bids from Yakima Planning Center</h3>
+    ${introLine}
+    ${emailBody}
+  `;
+
+  GmailApp.sendEmail(
+    "Samuel.Kroll@cwu.edu",
+    "New WA Bids from Yakima Planning Center",
+    "",
+    { htmlBody: htmlBody }
+  );
+
+  // Clear Daily Pull YPC after email is sent
+  dailySheet.clearContents();
 }
