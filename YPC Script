@@ -92,7 +92,7 @@ function updateYPCSeenAndNewBids() {
   `;
 
   GmailApp.sendEmail(
-    "Samuel.Kroll@cwu.edu",
+    "Samuel.Kroll@cwu.edu, tylers@ttcexcavation.com",
     "New WA Bids from Yakima Planning Center",
     "",
     { htmlBody: htmlBody }
