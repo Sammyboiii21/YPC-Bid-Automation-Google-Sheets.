@@ -61,10 +61,13 @@ function updateYPCSeenAndNewBids() {
   const waRows = newRows.filter(row => String(row[stateIndex]).toUpperCase() === "WA");
 
   // Further filter out specific localities (case-insensitive match on City column)
-  const excludedLocalities = [
-    "Arlington", "Auburn", "Bellevue", "Bellingham", "Brier", "Clark Co.", "Everett", "Federal Way", "Ilwaco", "Kirkland", "Kitsap Co.", "Lakewood", "Mason Co.", "Olympia", "Pierce Co.", "Raymond", "Redmond", "Renton", "Ridgefield", "Seattle", "Shoreline", "Skagit Co.", "Shelton", "Tacoma", "SeaTac"
+const excludedLocalities = [
+  "Arlington", "Auburn", "Bellevue", "Bellingham", "Brier", "Clark Co.", "Everett",
+  "Federal Way", "Ilwaco", "King Co.", "Kirkland", "Kitsap Co.", "Lakewood", "Mason Co.",
+  "Olympia", "Pierce Co.", "Raymond", "Redmond", "Renton", "Ridgefield", "Seattle",
+  "SeaTac", "Shelton", "Shoreline", "Skagit Co.", "Tacoma", "Vancouver", "Westport"
+].map(name => name.toUpperCase());
 
-  ].map(name => name.toUpperCase());
 
   const filteredWaRows = waRows.filter(row =>
     !excludedLocalities.includes(String(row[cityIndex]).toUpperCase())
