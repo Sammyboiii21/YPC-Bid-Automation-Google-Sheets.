@@ -62,7 +62,7 @@ function updateYPCSeenAndNewBids() {
 
   // Further filter out specific localities (case-insensitive match on City column)
 const excludedLocalities = [
-  "Arlington", "Auburn", "Bellevue", "Bellingham", "Brier", "Clark Co.", "Everett",
+  "Arlington", "Auburn", "Bellevue", "Bothell", "Bellingham", "Brier", "Clark Co.", "Everett",
   "Federal Way", "Ilwaco", "King Co.", "Kirkland", "Kitsap Co.", "Lakewood", "Mason Co.",
   "Olympia", "Pierce Co.", "Raymond", "Redmond", "Renton", "Ridgefield", "Seattle",
   "SeaTac", "Shelton", "Shoreline", "Skagit Co.", "Tacoma", "Vancouver", "Westport"
