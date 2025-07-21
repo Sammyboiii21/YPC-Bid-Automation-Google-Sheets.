@@ -62,11 +62,11 @@ function updateYPCSeenAndNewBids() {
 
   // Further filter out specific localities (case-insensitive match on City column)
 const excludedLocalities = [
-"Arlington", "Auburn", "Battle Ground", "Bellevue", "Bellingham", "Bothell", "Brier", "Camp Murray", "Clark Co.", 
-"Everett", "Federal Way", "Ferndale", "Ilwaco", "Kalama", "Kenmore", "King Co.", "Kirkland", "Kitsap Co.", 
+"Arlington", "Auburn", "Battle Ground", "Bellevue", "Bellingham", "Bothell", "Brier", "Camp Murray", "Clark Co.", "DuPont",
+"Everett", "Federal Way", "Ferndale", "Fife", "Ilwaco", "Kalama", "Kenmore", "King Co.", "Kirkland", "Kitsap Co.", 
 "Lakewood", "Longview", "Mason Co.", "McNeil Island", "Olympia", "Pierce Co.", "Raymond", "Redmond", "Renton", 
 "Ridgefield", "SeaTac", "Seattle", "Shelton", "Shoreline", "Skagit Co.", "Snohomish Co.", 
-"Steilacoom", "Tacoma", "Vancouver", "Westport"
+"Steilacoom", "Tacoma", "Thurston Co.", "Vancouver", "Westport"
 ].map(name => name.toUpperCase());
 
 
