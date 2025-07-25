@@ -63,9 +63,9 @@ function updateYPCSeenAndNewBids() {
   // Further filter out specific localities (case-insensitive match on City column)
 const excludedLocalities = [
 "Arlington", "Auburn", "Battle Ground", "Bellevue", "Bellingham", "Bothell", "Brier", "Bremerton", "Burien",
-"Camp Murray", "Clark Co.", "Covington", "DuPont", "Everett", "Edmonds", "Federal Way", "Ferndale", "Fife", "Gig Harbor",
-"Ilwaco", "Kalama", "Kenmore", "King Co.", "Kirkland", "Kitsap Co.", "Lakewood", "Longview",
-"Lewis Co.", "Mason Co.", "McNeil Island", "Normandy Park", "Olympia", "Pierce Co.", "Raymond",
+"Camp Murray", "Clark Co.", "Camas", "Covington", "DuPont", "Everett", "Edmonds", "Federal Way", "Ferndale", "Friday Harbor",
+"Fife", "Gig Harbor", "Ilwaco", "Kalama", "Kenmore", "King Co.", "Kirkland", "Kitsap Co.", "Lakewood",
+"Longview", "Lewis Co.", "Mason Co.", "McNeil Island", "Normandy Park", "Olympia", "Pierce Co.", "Raymond",
 "Redmond", "Renton", "Ridgefield", "SeaTac", "Seattle", "Shelton", "Shoreline", "Skagit Co.",
 "Snohomish Co.", "Steilacoom", "Tacoma", "Thurston Co.", "Vancouver", "Westport"
 ].map(name => name.toUpperCase());
@@ -120,9 +120,6 @@ const excludedLocalities = [
     { htmlBody: htmlBody }
   );
 
-  // Clear Daily Pull YPC after email is sent
-  dailySheet.clearContents();
-}
   // Clear Daily Pull YPC after email is sent
   dailySheet.clearContents();
 }
