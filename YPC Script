@@ -63,7 +63,7 @@ function updateYPCSeenAndNewBids() {
   // Further filter out specific localities (case-insensitive match on City column)
 const excludedLocalities = [
 "Arlington", "Auburn", "Battle Ground", "Bellevue", "Bellingham", "Bothell", "Brier", "Bremerton", "Burien",
-"Camp Murray", "Clark Co.", "Camas", "Covington", "Cowlitz Co.", "DuPont", "Everett", "Edmonds", "Federal Way", "Ferndale", "Friday Harbor",
+"Camp Murray", "Clark Co.", "Camas", "Covington", "Cowlitz Co.", "DuPont", "Everett", "Edmonds", "Edgewood", "Federal Way", "Ferndale", "Friday Harbor",
 "Fife", "Gig Harbor", "Ilwaco", "Kalama", "Kenmore", "King Co.", "Kirkland", "Kitsap Co.", "Lakewood",
 "Longview", "Lewis Co.", "Lilliwaup", "Mason Co.", "McNeil Island", "Mount Vernon", "Normandy Park", "Olympia", "Pierce Co.", "Poulsbo", "Puyallup", "Raymond",
 "Redmond", "Renton", "Ridgefield", "SeaTac", "Seattle", "Shelton", "Shoreline", "Skagit Co.",
@@ -114,7 +114,7 @@ const excludedLocalities = [
   `;
 
   GmailApp.sendEmail(
-    "samk@ttcexcavation.com",
+   "samk@ttcexcavation.com, tylers@ttcexcavation.com",
     "New WA Bids from Yakima Planning Center",
     "",
     { htmlBody: htmlBody }
