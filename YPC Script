@@ -64,10 +64,10 @@ function updateYPCSeenAndNewBids() {
 const excludedLocalities = [
 "Arlington", "Auburn", "Black Diamond", "Battle Ground", "Bellevue", "Bellingham", "Bothell", "Brier", "Bremerton", "Burien",
 "Camp Murray", "Clark Co.", "Camas", "Covington", "Cowlitz Co.", "DuPont", "Des Moines", "Everett", "Edmonds", "Edgewood", "Federal Way", "Ferndale", "Friday Harbor",
-"Fife", "Gig Harbor", "Ilwaco", "Kalama", "Kenmore", "King Co.", "Kirkland", "Kitsap Co.", "Lakewood",
+"Fife", "Gig Harbor", "Ilwaco", "JBLM", "Kalama", "Kenmore", "King Co.", "Kirkland", "Kitsap Co.", "Lakewood",
 "Longview", "Lewis Co.", "Lilliwaup", "Mason Co.", "McNeil Island", "Mount Vernon", "Normandy Park", "Olympia", "Pierce Co.", "Poulsbo", "Puyallup", "Raymond",
 "Redmond", "Renton", "Ridgefield", "Rochester", "SeaTac", "Seattle", "Shelton", "Shoreline", "Skagit Co.",
-"Snohomish Co.", "Steilacoom", "Tacoma", "Thurston Co.", "Union", "Vancouver", "Washougal", "Westport", "Winlock"
+"Snohomish Co.", "Steilacoom", "Sultan", "Tacoma", "Thurston Co.", "Union", "Vancouver", "Washougal", "Westport", "Winlock"
 ].map(name => name.toUpperCase());
 
 
