@@ -67,7 +67,7 @@ const excludedLocalities = [
 "Fife", "Gig Harbor", "Ilwaco", "JBLM", "Kalama", "Kenmore", "King Co.", "Kirkland", "Kitsap Co.", "Lakewood",
 "Longview", "Lewis Co.", "Lilliwaup", "Mason Co.", "McNeil Island", "Mount Vernon", "Normandy Park", "Olympia", "Pierce Co.", "Poulsbo", "Puyallup", "Raymond",
 "Redmond", "Renton", "Ridgefield", "Rochester", "SeaTac", "Seattle", "Shelton", "Shoreline", "Skagit Co.",
-"Snohomish Co.", "Steilacoom", "Sultan", "Tacoma", "Thurston Co.", "Union", "Vancouver", "Washougal", "Westport", "Winlock"
+"Snohomish Co.", "Steilacoom", "Sultan", "Summer", "Tacoma", "Thurston Co.", "Union", "Vancouver", "Vashon Island", "Washougal", "Westport", "Winlock"
 ].map(name => name.toUpperCase());
 
 
