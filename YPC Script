@@ -62,9 +62,9 @@ function updateYPCSeenAndNewBids() {
 
   // Further filter out specific localities (case-insensitive match on City column)
 const excludedLocalities = [
-"Arlington", "Auburn", "Aberdeen", "Brush Prairie", "Black Diamond", "Battle Ground", "Bellevue", "Bellingham", "Bothell", "Brier", "Bremerton", "Burien",
-"Camp Murray", "Clark Co.", "Camas", "Covington", "Cowlitz Co.", "Clallam Co.", "Coeur d'Alene", "DuPont", "Des Moines", "Everett", "Edmonds", "Edgewood", "Federal Way", "Ferndale", "Friday Harbor",
-"Fife", "Gig Harbor", "Happy Valley", "Ilwaco", "Issaquah", "JBLM", "Kalama", "Kenmore", "King Co.", "Kirkland", "Kent", "Kitsap Co.", "Lakewood",
+"Arlington", "Auburn", "Aberdeen", "Brush Prairie", "Black Diamond", "Battle Ground", "Bellevue", "Bellingham", "Bothell", "Brier", "Bremerton", "Burien", "Buckley",
+"Camp Murray", "Clark Co.", "Camas", "Covington", "Cowlitz Co.", "Clallam Co.", "Coeur d'Alene", "DuPont", "Des Moines", "Everett", "Edmonds", "Edgewood", "Enumclaw", "Federal Way", "Ferndale", "Friday Harbor",
+"Fife", "Gig Harbor", "Graham", "Happy Valley", "Ilwaco", "Issaquah", "JBLM", "Kalama", "Kenmore", "King Co.", "Kirkland", "Kent", "Kitsap Co.", "Lakewood",
 "Longview", "Lewis Co.", "Lilliwaup", "Long Beach", "Lynnwood", "Mason Co.", "McNeil Island", "Mount Vernon", "Medina", "Normandy Park", "Olympia", "Pierce Co.", "Poulsbo", "Puyallup", "Raymond",
 "Redmond", "Renton", "Ridgefield", "Rochester", "SeaTac", "Seattle", "Shelton", "Shoreline", "Skagit Co.",
 "Snohomish Co.", "Steilacoom", "Sultan", "Sumner", "Stanwood", "Sequim", "San Juan Co.", "Tacoma", "Thurston Co.", "Union", "Vancouver", "Vashon Island", "Whatcom Co.", "Washougal", "Westport", "Winlock", "Woodland"
