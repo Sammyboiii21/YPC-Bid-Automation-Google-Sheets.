@@ -35,7 +35,21 @@ function updateYPCSeenAndNewBids() {
     !seenIDs.has(String(row[projectIdIndex]).toUpperCase())
   );
 
-  const cleanedRows = newRows.map(row => {
+  // 🔽🔽🔽 NEW CODE TO REMOVE DUPLICATES WITHIN THE DAILY PULL 🔽🔽🔽
+  const seenInThisPull = new Set();
+  const uniqueNewRows = [];
+  for (const row of newRows) {
+    const id = String(row[projectIdIndex]).toUpperCase();
+    if (!seenInThisPull.has(id)) {
+      seenInThisPull.add(id);
+      uniqueNewRows.push(row);
+    }
+  }
+  // Replace original newRows with the deduplicated list
+  const finalNewRows = uniqueNewRows;
+  // 🔼🔼🔼 END OF NEW CODE 🔼🔼🔼
+
+  const cleanedRows = finalNewRows.map(row => {
     const cleaned = row.slice();
     cleaned[projectNameIndex] = {
       formula: `=HYPERLINK("${row[projectLinkIndex]}", "${row[projectNameIndex]}")`
@@ -58,20 +72,19 @@ function updateYPCSeenAndNewBids() {
   }
 
   // Filter only WA rows
-  const waRows = newRows.filter(row => String(row[stateIndex]).toUpperCase() === "WA");
+  const waRows = finalNewRows.filter(row => String(row[stateIndex]).toUpperCase() === "WA");
 
   // Further filter out specific localities (case-insensitive match on City column)
-const excludedLocalities = [
-"Arlington", "Auburn", "Aberdeen", "Algona", "Brush Prairie", "Black Diamond", "Battle Ground", "Bellevue", "Bellingham", "Bothell", "Brier", "Bremerton", "Burien", "Buckley",
-"Camp Murray", "Clark Co.", "Camas", "Covington", "Cowlitz Co.", "Clallam Co.", "Coeur d'Alene", "DuPont", "Des Moines", "Everson", "Everett", "Edmonds", "Edgewood", 
-"Enumclaw", "Federal Way", "Ferndale", "Friday Harbor", "Fife", "Gig Harbor", "Graham", "Happy Valley", "Ilwaco", "Issaquah", "JBLM", "Kalama", "Kenmore", "King Co.",
-"Kirkland", "Kent", "Kitsap Co.", "Kingston", "Lacey", "Lakewood", "Longview", "Lewis Co.", "Lilliwaup", "Long Beach", "Lynnwood", "Marysville", "Mercer Island", "Mason Co.", 
-"McNeil Island", "Mount Vernon", "Medina", "Monroe", "Normandy Park", "North Bend", "Olympia", "Port Gamble", "Pierce Co.", "Poulsbo", "Puyallup", "Raymond",
-"Redmond", "Renton", "Ridgefield", "Rochester", "Snohomish", "Snoqualmie", "SeaTac", "Seattle", "Shelton", "Shoreline", "Skagit Co.", "Snohomish Co.", "Steilacoom",
-"Sultan", "Sumner", "Stanwood", "Sequim", "San Juan Co.", "Taholah", "Tacoma", "Thurston Co.", "Union", "Vancouver", "Vashon Island", "Woodinville", "Whatcom Co.", 
-"Washougal", "Westport", "Winlock", "Woodland"
-].map(name => name.toUpperCase());
-
+  const excludedLocalities = [
+    "Arlington", "Auburn", "Aberdeen", "Algona", "Brush Prairie", "Black Diamond", "Battle Ground", "Bellevue", "Bellingham", "Bothell", "Brier", "Bremerton", "Burien", "Buckley",
+    "Camp Murray", "Clark Co.", "Camas", "Covington", "Cowlitz Co.", "Clallam Co.", "Coeur d'Alene", "DuPont", "Des Moines", "Everson", "Everett", "Edmonds", "Edgewood", 
+    "Enumclaw", "Federal Way", "Ferndale", "Friday Harbor", "Fife", "Gig Harbor", "Graham", "Happy Valley", "Ilwaco", "Issaquah", "JBLM", "Kalama", "Kenmore", "King Co.",
+    "Kirkland", "Kent", "Kitsap Co.", "Kingston", "Lacey", "Lakewood", "Longview", "Lewis Co.", "Lilliwaup", "Long Beach", "Lynnwood", "Marysville", "Mercer Island", "Mason Co.", 
+    "McNeil Island", "Mount Vernon", "Medina", "Monroe", "Normandy Park", "North Bend", "Olympia", "Port Gamble", "Pierce Co.", "Poulsbo", "Puyallup", "Raymond",
+    "Redmond", "Renton", "Ridgefield", "Rochester", "Snohomish", "Snoqualmie", "SeaTac", "Seattle", "Shelton", "Shoreline", "Skagit Co.", "Snohomish Co.", "Steilacoom",
+    "Sultan", "Sumner", "Stanwood", "Sequim", "San Juan Co.", "Taholah", "Tacoma", "Thurston Co.", "Union", "Vancouver", "Vashon Island", "Woodinville", "Whatcom Co.", 
+    "Washougal", "Westport", "Winlock", "Woodland"
+  ].map(name => name.toUpperCase());
 
   const filteredWaRows = waRows.filter(row =>
     !excludedLocalities.includes(String(row[cityIndex]).toUpperCase())
@@ -116,7 +129,7 @@ const excludedLocalities = [
   `;
 
   GmailApp.sendEmail(
-   "samk@ttcexcavation.com, tylers@ttcexcavation.com",
+    "samk@ttcexcavation.com, tylers@ttcexcavation.com",
     "New WA Bids from Yakima Planning Center",
     "",
     { htmlBody: htmlBody }
