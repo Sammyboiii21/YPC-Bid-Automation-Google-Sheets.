@@ -81,7 +81,7 @@ function updateYPCSeenAndNewBids() {
     "Enumclaw", "Federal Way", "Ferndale", "Friday Harbor", "Fife", "Gig Harbor", "Graham", "Happy Valley", "Ilwaco", "Issaquah", "JBLM", "Jefferson Co.", "Kalama", "Kenmore", "King Co.",
     "Kirkland", "Kent", "Kitsap Co.", "Kingston", "Lacey", "Lakewood", "Longview", "Lewis Co.", "Lilliwaup", "Long Beach", "Lynnwood", "Marysville", "Mercer Island", "Mason Co.", 
     "McNeil Island", "Mount Vernon", "Medina", "Monroe", "Normandy Park", "North Bend", "Olympia", "Port Gamble", "Pierce Co.", "Poulsbo", "Puyallup", "Raymond",
-    "Redmond", "Renton", "Ridgefield", "Rochester", "Snohomish", "Snoqualmie", "SeaTac", "Seattle", "Shelton", "Shoreline", "Skagit Co.", "Snohomish Co.", "Steilacoom",
+    "Redmond", "Renton", "Ridgefield", "Rochester", "Sedro Woolley", "Snohomish", "Snoqualmie", "SeaTac", "Seattle", "Shelton", "Shoreline", "Skagit Co.", "Snohomish Co.", "Steilacoom",
     "Sultan", "Sumner", "Stanwood", "Sequim", "San Juan Co.", "Taholah", "Tacoma", "Thurston Co.", "Union", "Vancouver", "Vashon Island", "Woodinville", "Whatcom Co.", 
     "Washougal", "Westport", "Winlock", "Woodland"
   ].map(name => name.toUpperCase());
